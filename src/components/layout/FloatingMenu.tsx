@@ -70,9 +70,6 @@ export default function FloatingMenu() {
           className={`bg-gradient-to-r from-blue-600 to-purple-600 text-white p-4 rounded-full shadow-2xl hover:shadow-3xl hover:scale-110 transition-all duration-300 border-2 border-white ${
             isOpen ? 'rotate-45' : 'rotate-0'
           }`}
-          style={{ 
-            boxShadow: '0 10px 30px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.1)' 
-          }}
         >
           <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
             {isOpen ? (

@@ -258,13 +258,10 @@ export default function ChatWindow({ conversation, onClose }: ChatWindowProps) {
               onChange={(e) => handleInputChange(e.target.value)}
               onKeyPress={handleKeyPress}
               placeholder="Type a message..."
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+              className={`w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none min-h-[40px] max-h-[120px] ${
+                newMessage.split('\n').length > 3 ? 'overflow-y-scroll' : 'overflow-y-hidden'
+              }`}
               rows={1}
-              style={{
-                minHeight: '40px',
-                maxHeight: '120px',
-                overflowY: newMessage.split('\n').length > 3 ? 'scroll' : 'hidden'
-              }}
             />
           </div>
           
@@ -284,8 +281,8 @@ export default function ChatWindow({ conversation, onClose }: ChatWindowProps) {
           <div className="flex items-center mt-2 text-sm text-gray-500">
             <div className="flex space-x-1 mr-2">
               <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
-              <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
-              <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+              <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce [animation-delay:0.1s]"></div>
+              <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce [animation-delay:0.2s]"></div>
             </div>
             <span>You are typing...</span>
           </div>

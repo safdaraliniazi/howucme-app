@@ -27,16 +27,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${inter.variable} ${poppins.variable} antialiased`}
-        style={{
-          margin: 0,
-          padding: 0,
-          backgroundColor: 'var(--color-background-primary, #ffffff)',
-          color: 'var(--color-text-primary, #0f172a)',
-          fontFamily: 'var(--font-inter), system-ui, -apple-system, sans-serif',
-          lineHeight: 1.6,
-          minHeight: '100vh'
-        }}
+        className={`${inter.variable} ${poppins.variable} antialiased m-0 p-0 min-h-screen font-inter leading-relaxed`}
       >
         <QueryProvider>
           {children}

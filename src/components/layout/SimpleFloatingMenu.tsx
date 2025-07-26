@@ -20,17 +20,10 @@ export default function SimpleFloatingMenu() {
   return (
     <>
       {/* Simple floating button */}
-      <div style={{ position: 'fixed', bottom: '24px', right: '24px', zIndex: 9999 }}>
+      <div className="fixed bottom-6 right-6 z-[9999]">
         {/* Menu items */}
         {isOpen && (
-          <div style={{ 
-            position: 'absolute', 
-            bottom: '70px', 
-            right: '0px',
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '12px'
-          }}>
+          <div className="absolute bottom-[70px] right-0 flex flex-col gap-3">
             {menuItems.map((item) => (
               <button
                 key={item.name}
@@ -38,9 +31,8 @@ export default function SimpleFloatingMenu() {
                   router.push(item.href);
                   setIsOpen(false);
                 }}
-                className={`${item.bg} text-white p-3 rounded-full shadow-lg hover:scale-110 transition-all`}
+                className={`${item.bg} text-white p-3 rounded-full shadow-lg hover:scale-110 transition-all text-lg min-w-[48px] min-h-[48px] flex items-center justify-center`}
                 title={item.name}
-                style={{ fontSize: '18px', minWidth: '48px', minHeight: '48px' }}
               >
                 {item.icon}
               </button>
@@ -51,15 +43,7 @@ export default function SimpleFloatingMenu() {
         {/* Main button */}
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="bg-blue-500 hover:bg-blue-600 text-white rounded-full shadow-lg hover:scale-110 transition-all"
-          style={{
-            width: '56px',
-            height: '56px',
-            fontSize: '24px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center'
-          }}
+          className="bg-blue-500 hover:bg-blue-600 text-white rounded-full shadow-lg hover:scale-110 transition-all w-14 h-14 text-2xl flex items-center justify-center"
         >
           {isOpen ? '✕' : '☰'}
         </button>
@@ -68,15 +52,7 @@ export default function SimpleFloatingMenu() {
       {/* Overlay */}
       {isOpen && (
         <div
-          style={{
-            position: 'fixed',
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            backgroundColor: 'rgba(0, 0, 0, 0.2)',
-            zIndex: 9998
-          }}
+          className="fixed inset-0 bg-black/20 z-[9998]"
           onClick={() => setIsOpen(false)}
         />
       )}
