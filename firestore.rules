@@ -1,0 +1,69 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Users can read and write their own user document
+    match /users/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+      allow read: if request.auth != null; // Allow other users to read basic profile info
+    }
+    
+    // Posts are readable by authenticated users, writable by the author
+    match /posts/{postId} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null && request.auth.uid == resource.data.fromUid;
+      allow create: if request.auth != null && request.auth.uid == request.resource.data.fromUid;
+    }
+    
+    // Relationships
+    match /relationships/{relationshipId} {
+      allow read, write: if request.auth != null && 
+        (request.auth.uid == resource.data.from || request.auth.uid == resource.data.to);
+      allow create: if request.auth != null && 
+        (request.auth.uid == request.resource.data.from || request.auth.uid == request.resource.data.to);
+    }
+    
+    // Conversations - participants can read and write
+    match /conversations/{conversationId} {
+      allow read, write: if request.auth != null && 
+        request.auth.uid in resource.data.participants;
+      allow create: if request.auth != null && 
+        request.auth.uid in request.resource.data.participants;
+    }
+    
+    // Messages - conversation participants can read and write
+    match /messages/{messageId} {
+      allow read, write: if request.auth != null;
+      // More complex rules would check conversation participation
+    }
+    
+    // Families
+    match /families/{familyId} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null; // TODO: Add proper member checks
+    }
+    
+    // Communities
+    match /communities/{communityId} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null; // TODO: Add proper member/moderator checks
+    }
+    
+    // Achievements
+    match /achievements/{achievementId} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null && request.auth.uid == resource.data.userId;
+      allow create: if request.auth != null && request.auth.uid == request.resource.data.userId;
+    }
+    
+    // Celebrations
+    match /celebrations/{celebrationId} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null;
+    }
+    
+    // Default: deny all other access
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
